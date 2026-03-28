@@ -111,6 +111,7 @@
             color: var(--text-gray);
             font-weight: 500;
             transition: color 0.3s;
+            cursor: pointer;
         }
 
         .nav-links a:hover {
@@ -171,11 +172,10 @@
             z-index: 1;
         }
 
-        .banner-slider {
+        .banner-container {
             position: relative;
             width: 100%;
             height: 100%;
-            animation: slideShow 12s infinite;
         }
 
         .banner-slide {
@@ -185,32 +185,11 @@
             background-size: cover;
             background-position: center;
             opacity: 0;
-            animation: fadeSlide 12s infinite;
+            transition: opacity 1s ease-in-out;
         }
 
-        .banner-slide:nth-child(1) {
-            background-image: url('https://images.unsplash.com/photo-1626668893638-6e8e2b6c2d8a?w=800&h=600&fit=crop');
-            animation-delay: 0s;
-        }
-        .banner-slide:nth-child(2) {
-            background-image: url('https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&h=600&fit=crop');
-            animation-delay: 4s;
-        }
-        .banner-slide:nth-child(3) {
-            background-image: url('https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&h=600&fit=crop');
-            animation-delay: 8s;
-        }
-
-        @keyframes slideShow {
-            0%, 33.33% { transform: translateX(0); }
-            33.34%, 66.66% { transform: translateX(-100%); }
-            66.67%, 100% { transform: translateX(-200%); }
-        }
-
-        @keyframes fadeSlide {
-            0%, 25% { opacity: 1; }
-            33.33%, 91.67% { opacity: 0; }
-            100% { opacity: 0; }
+        .banner-slide.active {
+            opacity: 1;
         }
 
         .banner-overlay {
@@ -277,6 +256,12 @@
             z-index: 10;
             animation: slideInLeft 0.6s ease;
             border-left: 4px solid #f39c12;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .mercedes-featured:hover {
+            transform: translateY(-5px);
         }
 
         .mercedes-icon {
@@ -287,7 +272,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
         }
 
         .mercedes-icon i {
@@ -327,71 +311,7 @@
             }
         }
 
-        /* Floating Particles Animation */
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-            animation: float 6s infinite;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .car-banner {
-                width: 100%;
-                opacity: 0.3;
-            }
-            .hero-content {
-                max-width: 100%;
-                text-align: center;
-            }
-            .mercedes-featured {
-                bottom: 20px;
-                left: 20px;
-                right: 20px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-            .nav-links {
-                display: none;
-            }
-            .mercedes-featured {
-                padding: 0.75rem;
-            }
-            .mercedes-icon {
-                width: 45px;
-                height: 45px;
-            }
-            .mercedes-icon i {
-                font-size: 1.5rem;
-            }
-        }
-
-        /* Rest of the existing styles */
+        /* Booking Section with Ride Selection */
         .booking-section {
             position: relative;
             margin-top: -80px;
@@ -408,11 +328,57 @@
             margin: 0 auto;
         }
 
+        .booking-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 35px;
+            height: 35px;
+            background: var(--border-color);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--text-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .step.active .step-number {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        .step.active .step-label {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
         .booking-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.5rem;
             align-items: end;
+        }
+
+        .form-group {
+            margin-bottom: 0;
         }
 
         .form-group label {
@@ -433,6 +399,156 @@
             transition: all 0.3s;
         }
 
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Ride Selection Grid */
+        .ride-selection {
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .ride-selection.active {
+            display: block;
+        }
+
+        .ride-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .ride-card {
+            background: var(--light-bg);
+            border-radius: 15px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .ride-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .ride-card.selected {
+            border-color: var(--primary-blue);
+            background: white;
+        }
+
+        .ride-image {
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .ride-name {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .ride-price {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        /* Front Page Fleet Section */
+        .front-fleet-section {
+            padding: 5rem 5%;
+            background: var(--light-bg);
+        }
+
+        .front-fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .front-fleet-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+        }
+
+        .front-fleet-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .front-fleet-image {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .front-fleet-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--success-green);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .front-fleet-info {
+            padding: 1.5rem;
+        }
+
+        .front-fleet-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .front-fleet-specs {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            color: var(--text-gray);
+            font-size: 0.85rem;
+        }
+
+        .front-fleet-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin: 1rem 0;
+        }
+
+        .btn-book-front {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-book-front:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Stats Section */
         .stats-section {
             padding: 5rem 5%;
             background: white;
@@ -447,9 +563,21 @@
             text-align: center;
         }
 
-        .vehicles-section {
+        .stat-card {
+            padding: 1.5rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Features Section */
+        .features-section {
             padding: 5rem 5%;
-            background: var(--light-bg);
+            background: white;
         }
 
         .section-header {
@@ -473,89 +601,6 @@
             margin-bottom: 1rem;
         }
 
-        .vehicle-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .vehicle-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.3s;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-        }
-
-        .vehicle-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .vehicle-image {
-            height: 220px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-
-        .vehicle-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--success-green);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .vehicle-info {
-            padding: 1.5rem;
-        }
-
-        .vehicle-name {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .vehicle-specs {
-            display: flex;
-            gap: 1rem;
-            margin: 1rem 0;
-            color: var(--text-gray);
-            font-size: 0.85rem;
-        }
-
-        .vehicle-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-            margin: 1rem 0;
-        }
-
-        .btn-book {
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .features-section {
-            padding: 5rem 5%;
-            background: white;
-        }
-
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -571,6 +616,10 @@
             transition: all 0.3s;
         }
 
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
         .feature-icon {
             width: 70px;
             height: 70px;
@@ -582,6 +631,12 @@
             margin: 0 auto 1.5rem;
         }
 
+        .feature-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        /* Testimonials */
         .testimonials-section {
             padding: 5rem 5%;
             background: linear-gradient(135deg, var(--primary-blue), var(--accent-purple));
@@ -603,12 +658,56 @@
             border-radius: 20px;
         }
 
+        /* My Bookings Page */
+        .bookings-page {
+            display: none;
+            padding: 8rem 5% 4rem;
+            min-height: 100vh;
+            background: var(--light-bg);
+        }
+
+        .bookings-page.active {
+            display: block;
+        }
+
+        .bookings-list {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .booking-item {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .booking-item:hover {
+            transform: translateX(5px);
+        }
+
+        .booking-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--success-green);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+
+        /* CTA Section */
         .cta-section {
             padding: 5rem 5%;
             text-align: center;
             background: white;
         }
 
+        /* Footer */
         .footer {
             background: var(--dark-bg);
             color: white;
@@ -623,6 +722,24 @@
             margin: 0 auto;
         }
 
+        .footer-col h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-col p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -647,8 +764,26 @@
             padding: 2rem;
             max-width: 500px;
             width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-gray);
+        }
+
+        /* Success Message */
         .success-message {
             position: fixed;
             bottom: 2rem;
@@ -666,6 +801,7 @@
             transform: translateX(0);
         }
 
+        /* AI Assistant */
         .ai-assistant {
             position: fixed;
             bottom: 2rem;
@@ -683,6 +819,49 @@
             align-items: center;
             justify-content: center;
             box-shadow: var(--shadow-lg);
+            transition: transform 0.3s;
+        }
+
+        .ai-assistant-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .ai-assistant-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .car-banner {
+                width: 100%;
+                opacity: 0.3;
+            }
+            .hero-content {
+                max-width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .nav-links {
+                display: none;
+            }
+            .booking-grid {
+                grid-template-columns: 1fr;
+            }
+            .booking-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            .booking-steps {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
@@ -699,121 +878,188 @@
             </div>
         </div>
         <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#vehicles">Our Fleet</a>
-            <a href="#features">Features</a>
-            <a href="#testimonials">Reviews</a>
-            <button class="btn-primary" onclick="openModal()">Sign In</button>
+            <a onclick="showPage('home')">Home</a>
+            <a onclick="showPage('vehicles')">All Fleet</a>
+            <a onclick="showPage('bookings')">My Bookings</a>
+            <a onclick="showPage('features')">Features</a>
+            <button class="btn-primary" onclick="openSignInModal()">Sign In</button>
         </div>
     </nav>
 
-    <!-- Hero Section with Animated Car Banner -->
-    <section class="hero">
-        <!-- Animated Car Banner -->
-        <div class="car-banner">
-            <div class="banner-slider">
-                <div class="banner-slide"></div>
-                <div class="banner-slide"></div>
-                <div class="banner-slide"></div>
+    <!-- Home Page -->
+    <div id="home-page">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="car-banner">
+                <div class="banner-container" id="banner-container">
+                    <div class="banner-slide active" style="background-image: url('https://images.unsplash.com/photo-1626668893638-6e8e2b6c2d8a?w=800&h=600&fit=crop')"></div>
+                    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&h=600&fit=crop')"></div>
+                    <div class="banner-slide" style="background-image: url('https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&h=600&fit=crop')"></div>
+                </div>
+                <div class="banner-overlay"></div>
             </div>
-            <div class="banner-overlay"></div>
-        </div>
-        
-        <!-- Floating Particles -->
-        <div class="particles" id="particles"></div>
-        
-        <div class="hero-content">
-            <div class="hero-badge">
-                <i class="fas fa-robot"></i> AI-Powered Experience
+            
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-robot"></i> AI-Powered Experience
+                </div>
+                <h1>Drive the Future with <span>AI-Powered</span> Car Rental</h1>
+                <p>Experience seamless booking, intelligent recommendations, and premium vehicles. Our AI system learns your preferences to provide the perfect car for every journey.</p>
+                <button class="btn-outline" style="background: white; border: none;" onclick="document.getElementById('booking').scrollIntoView({behavior: 'smooth'})">
+                    Book Your Car Now →
+                </button>
             </div>
-            <h1>Drive the Future with <span>AI-Powered</span> Car Rental</h1>
-            <p>Experience seamless booking, intelligent recommendations, and premium vehicles. Our AI system learns your preferences to provide the perfect car for every journey.</p>
-            <button class="btn-outline" style="background: white; border: none;" onclick="document.getElementById('booking').scrollIntoView({behavior: 'smooth'})">
-                Book Your Car Now →
-            </button>
-        </div>
-        
-        <!-- Mercedes-Benz EQS Featured Card -->
-        <div class="mercedes-featured">
-            <div class="mercedes-icon">
-                <i class="fas fa-car-side"></i>
+            
+            <!-- Mercedes-Benz EQS Featured Card with Fixed Image -->
+            <div class="mercedes-featured" onclick="selectMercedesEQS()">
+                <div class="mercedes-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/512/741/741407.png" alt="Mercedes Logo" style="width: 35px; height: 35px;">
+                </div>
+                <div class="mercedes-info">
+                    <h4>Mercedes-Benz EQS 2024</h4>
+                    <p>All-Electric Luxury Sedan | 480km Range</p>
+                    <span class="mercedes-badge"><i class="fas fa-key"></i> Digital Key Included</span>
+                </div>
             </div>
-            <div class="mercedes-info">
-                <h4>Mercedes-Benz EQS 2024</h4>
-                <p>All-Electric Luxury Sedan | 480km Range</p>
-                <span class="mercedes-badge"><i class="fas fa-key"></i> Digital Key Included</span>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- AI Assistant -->
-    <div class="ai-assistant">
-        <div class="ai-assistant-icon">
-            <i class="fas fa-headset"></i>
+        <!-- Booking Section with Ride Selection -->
+        <div class="booking-section" id="booking">
+            <div class="booking-card">
+                <div class="booking-steps">
+                    <div class="step active" id="step1">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Select Dates & Location</div>
+                    </div>
+                    <div class="step" id="step2">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Choose Your Ride</div>
+                    </div>
+                    <div class="step" id="step3">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Complete Booking</div>
+                    </div>
+                </div>
+                
+                <!-- Step 1: Date & Location -->
+                <div id="step1-content">
+                    <div class="booking-grid">
+                        <div class="form-group">
+                            <label>📍 Pickup Location</label>
+                            <select id="location">
+                                <option>Downtown - Main Street</option>
+                                <option>International Airport</option>
+                                <option>City Center Mall</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>📅 Pickup Date</label>
+                            <input type="date" id="pickup-date">
+                        </div>
+                        <div class="form-group">
+                            <label>📅 Return Date</label>
+                            <input type="date" id="return-date">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn-primary" style="width: 100%;" onclick="goToStep2()">Continue to Select Ride →</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Ride Selection -->
+                <div id="step2-content" class="ride-selection">
+                    <h3 style="margin-bottom: 1rem;">Choose Your Perfect Ride</h3>
+                    <div class="ride-grid" id="ride-grid"></div>
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button class="btn-outline" onclick="goToStep1()">← Back</button>
+                        <button class="btn-primary" onclick="goToStep3()" id="continue-to-checkout" disabled>Continue to Checkout →</button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Checkout -->
+                <div id="step3-content" class="ride-selection">
+                    <h3 style="margin-bottom: 1rem;">Complete Your Booking</h3>
+                    <div id="checkout-summary" style="background: var(--light-bg); padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem;"></div>
+                    <div class="booking-grid">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="checkout-name" placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="checkout-email" placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" id="checkout-phone" placeholder="+1 234 567 890">
+                        </div>
+                        <div class="form-group">
+                            <label>Driver's License</label>
+                            <input type="text" id="checkout-license" placeholder="License number">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                        <button class="btn-outline" onclick="goToStep2()">← Back</button>
+                        <button class="btn-primary" onclick="completeBooking()">Confirm Booking →</button>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- Front Page Fleet Section - Direct Booking -->
+        <div class="front-fleet-section">
+            <div class="section-header">
+                <div class="section-subtitle">Our Premium Fleet</div>
+                <h2 class="section-title">Book Your Dream Car Instantly</h2>
+                <p class="section-description">Choose from our collection of luxury vehicles and book directly</p>
+            </div>
+            <div class="front-fleet-grid" id="front-fleet-grid"></div>
+        </div>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Premium Vehicles</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10,000+</div>
+                    <div class="stat-label">Happy Customers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Customer Support</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Locations</div>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <!-- Booking Section -->
-    <div class="booking-section" id="booking">
-        <div class="booking-card">
-            <div class="booking-grid">
-                <div class="form-group">
-                    <label>📍 Pickup Location</label>
-                    <select id="location">
-                        <option>Downtown - Main Street</option>
-                        <option>International Airport</option>
-                        <option>City Center Mall</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>📅 Pickup Date</label>
-                    <input type="date" id="pickup-date">
-                </div>
-                <div class="form-group">
-                    <label>📅 Return Date</label>
-                    <input type="date" id="return-date">
-                </div>
-                <div class="form-group">
-                    <button class="btn-primary" style="width: 100%;" onclick="searchCars()">Search Available Cars</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">500+</div>
-                <div class="stat-label">Premium Vehicles</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">10,000+</div>
-                <div class="stat-label">Happy Customers</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">24/7</div>
-                <div class="stat-label">Customer Support</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">50+</div>
-                <div class="stat-label">Locations</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Vehicles Section -->
-    <section class="vehicles-section" id="vehicles">
+    <!-- All Fleet Page -->
+    <div id="vehicles-page" class="vehicles-section" style="display: none;">
         <div class="section-header">
-            <div class="section-subtitle">Our Premium Fleet</div>
-            <h2 class="section-title">Choose Your Perfect Ride</h2>
-            <p class="section-description">From luxury sedans to powerful SUVs, we have the perfect vehicle for every occasion</p>
+            <div class="section-subtitle">Complete Fleet</div>
+            <h2 class="section-title">All Available Vehicles</h2>
+            <p class="section-description">Browse our complete collection of luxury and premium vehicles</p>
         </div>
         <div class="vehicle-grid" id="vehicle-grid"></div>
-    </section>
+    </div>
 
-    <!-- Features Section -->
-    <section class="features-section" id="features">
+    <!-- My Bookings Page -->
+    <div id="bookings-page" class="bookings-page">
+        <div class="section-header">
+            <div class="section-subtitle">Your Journey History</div>
+            <h2 class="section-title">My Bookings</h2>
+        </div>
+        <div class="bookings-list" id="bookings-list"></div>
+    </div>
+
+    <!-- Features Page -->
+    <div id="features-page" class="features-section" style="display: none;">
         <div class="section-header">
             <div class="section-subtitle">Why Choose Us</div>
             <h2 class="section-title">Experience the Difference</h2>
@@ -848,10 +1094,10 @@
                 <p>Round-the-clock assistance from our dedicated team</p>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Testimonials Section -->
-    <section class="testimonials-section" id="testimonials">
+    <section class="testimonials-section">
         <div class="section-header" style="color: white;">
             <div class="section-subtitle" style="color: rgba(255,255,255,0.8);">Customer Reviews</div>
             <h2 class="section-title" style="color: white;">What Our Clients Say</h2>
@@ -876,7 +1122,7 @@
     <section class="cta-section">
         <h2>Ready to Experience the Future?</h2>
         <p>Join thousands of satisfied customers who trust AI Drive for their mobility needs</p>
-        <button class="btn-primary" onclick="openModal()">Get Started Today</button>
+        <button class="btn-primary" onclick="openSignInModal()">Get Started Today</button>
     </section>
 
     <!-- Footer -->
@@ -904,42 +1150,42 @@
         </div>
     </footer>
 
-    <!-- Modal -->
-    <div class="modal" id="modal">
+    <!-- Sign In Modal -->
+    <div class="modal" id="signin-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Complete Your Booking</h2>
-                <button class="close-modal" onclick="closeModal()">&times;</button>
+                <h2>Sign In to AI Drive</h2>
+                <button class="close-modal" onclick="closeSignInModal()">&times;</button>
             </div>
-            <div id="modal-details"></div>
-            <form id="booking-form">
-                <div class="form-group" style="margin-bottom: 1rem;">
-                    <label>Full Name</label>
-                    <input type="text" id="customer-name" required placeholder="Enter your full name">
-                </div>
+            <form id="signin-form">
                 <div class="form-group" style="margin-bottom: 1rem;">
                     <label>Email Address</label>
-                    <input type="email" id="customer-email" required placeholder="your@email.com">
+                    <input type="email" id="signin-email" required placeholder="your@email.com">
                 </div>
                 <div class="form-group" style="margin-bottom: 1rem;">
-                    <label>Phone Number</label>
-                    <input type="tel" id="customer-phone" required placeholder="+1 234 567 890">
+                    <label>Password</label>
+                    <input type="password" id="signin-password" required placeholder="••••••••">
                 </div>
-                <div class="form-group" style="margin-bottom: 1rem;">
-                    <label>Driver's License Number</label>
-                    <input type="text" id="license-number" required placeholder="Enter license number">
-                </div>
-                <button type="submit" class="btn-primary" style="width: 100%;">Confirm Booking</button>
+                <button type="submit" class="btn-primary" style="width: 100%;">Sign In</button>
+                <p style="text-align: center; margin-top: 1rem; color: var(--text-gray);">Demo: Use any email to sign in</p>
             </form>
         </div>
     </div>
 
+    <!-- Success Message -->
     <div class="success-message" id="success-message">
-        <i class="fas fa-check-circle"></i> Booking Confirmed! Check your email.
+        <i class="fas fa-check-circle"></i> Action completed successfully!
+    </div>
+
+    <!-- AI Assistant -->
+    <div class="ai-assistant" onclick="showAIMessage()">
+        <div class="ai-assistant-icon">
+            <i class="fas fa-headset"></i>
+        </div>
     </div>
 
     <script>
-        // Vehicle Data
+        // Vehicle Data with Working Images
         const cars = [
             {
                 id: 1,
@@ -948,8 +1194,8 @@
                 seats: 5,
                 transmission: "Automatic",
                 price: 189,
-                image: "https://images.unsplash.com/photo-1626668893638-6e8e2b6c2d8a?w=400",
-                features: ["Hyperscreen", "Air Suspension", "Massage Seats", "Digital Key"]
+                image: "https://www.topgear.com/sites/default/files/2023/07/Large-42763-EQSSUV.jpg",
+                features: ["Hyperscreen", "Air Suspension", "Digital Key"]
             },
             {
                 id: 2,
@@ -958,7 +1204,7 @@
                 seats: 5,
                 transmission: "Automatic",
                 price: 199,
-                image: "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=400",
+                image: "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=500&h=300&fit=crop",
                 features: ["Electric", "Autopilot", "Premium Sound"]
             },
             {
@@ -968,7 +1214,7 @@
                 seats: 5,
                 transmission: "Automatic",
                 price: 179,
-                image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=400",
+                image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500&h=300&fit=crop",
                 features: ["Luxury Interior", "Executive Lounge", "B&W Sound"]
             },
             {
@@ -978,7 +1224,7 @@
                 seats: 4,
                 transmission: "Automatic",
                 price: 219,
-                image: "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?w=400",
+                image: "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?w=500&h=300&fit=crop",
                 features: ["Sport Design", "Performance", "Fast Charging"]
             },
             {
@@ -988,7 +1234,7 @@
                 seats: 5,
                 transmission: "Automatic",
                 price: 159,
-                image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400",
+                image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=500&h=300&fit=crop",
                 features: ["Off-Road", "Luxury", "Panoramic Roof"]
             },
             {
@@ -998,17 +1244,301 @@
                 seats: 4,
                 transmission: "Automatic",
                 price: 209,
-                image: "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?w=400",
+                image: "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?w=500&h=300&fit=crop",
                 features: ["Electric", "Sporty", "Premium Interior"]
             }
         ];
 
-        let selectedCar = null;
+        // Dummy Bookings Data
+        let dummyBookings = [
+            {
+                id: 'AID001',
+                carName: 'Mercedes-Benz EQS',
+                customerName: 'John Smith',
+                pickupDate: '2024-12-20',
+                returnDate: '2024-12-25',
+                totalPrice: 945,
+                status: 'Confirmed',
+                image: 'https://www.topgear.com/sites/default/files/2023/07/Large-42763-EQSSUV.jpg'
+            },
+            {
+                id: 'AID002',
+                carName: 'Tesla Model S Plaid',
+                customerName: 'Emily Johnson',
+                pickupDate: '2024-12-15',
+                returnDate: '2024-12-18',
+                totalPrice: 597,
+                status: 'Completed',
+                image: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=100&h=100&fit=crop'
+            },
+            {
+                id: 'AID003',
+                carName: 'BMW i7',
+                customerName: 'Michael Brown',
+                pickupDate: '2024-12-28',
+                returnDate: '2025-01-02',
+                totalPrice: 895,
+                status: 'Confirmed',
+                image: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=100&h=100&fit=crop'
+            },
+            {
+                id: 'AID004',
+                carName: 'Porsche Taycan',
+                customerName: 'Sarah Wilson',
+                pickupDate: '2025-01-05',
+                returnDate: '2025-01-08',
+                totalPrice: 657,
+                status: 'Pending',
+                image: 'https://images.unsplash.com/photo-1614200187524-dc4b892acf16?w=100&h=100&fit=crop'
+            },
+            {
+                id: 'AID005',
+                carName: 'Range Rover Sport',
+                customerName: 'David Lee',
+                pickupDate: '2025-01-10',
+                returnDate: '2025-01-15',
+                totalPrice: 795,
+                status: 'Confirmed',
+                image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=100&h=100&fit=crop'
+            }
+        ];
 
-        function renderCars() {
-            const grid = document.getElementById('vehicle-grid');
+        let selectedRide = null;
+        let currentStep = 1;
+
+        // Render Front Page Fleet
+        function renderFrontFleet() {
+            const grid = document.getElementById('front-fleet-grid');
+            if (!grid) return;
+            
             grid.innerHTML = cars.map(car => `
-                <div class="vehicle-card" onclick="selectCar(${car.id})">
+                <div class="front-fleet-card" onclick="directBookFromFront(${car.id})">
+                    <div class="front-fleet-image" style="background-image: url('${car.image}')">
+                        <div class="front-fleet-badge">New ${car.year}</div>
+                    </div>
+                    <div class="front-fleet-info">
+                        <div class="front-fleet-name">${car.name}</div>
+                        <div class="front-fleet-specs">
+                            <span><i class="fas fa-users"></i> ${car.seats} seats</span>
+                            <span><i class="fas fa-cogs"></i> ${car.transmission}</span>
+                            <span><i class="fas fa-bolt"></i> ${car.year}</span>
+                        </div>
+                        <div class="front-fleet-price">$${car.price} <span style="font-size: 0.9rem;">/day</span></div>
+                        <button class="btn-book-front" onclick="event.stopPropagation(); directBookFromFront(${car.id})">Book Now →</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Direct Book from Front Page
+        function directBookFromFront(carId) {
+            const car = cars.find(c => c.id === carId);
+            if (car) {
+                selectedRide = car;
+                // Set default dates if not set
+                const pickupDate = document.getElementById('pickup-date').value;
+                const returnDate = document.getElementById('return-date').value;
+                if (!pickupDate || !returnDate) {
+                    const today = new Date();
+                    document.getElementById('pickup-date').valueAsDate = today;
+                    const returnDateObj = new Date(today);
+                    returnDateObj.setDate(today.getDate() + 3);
+                    document.getElementById('return-date').valueAsDate = returnDateObj;
+                }
+                document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+                goToStep2();
+            }
+        }
+
+        // Display Dummy Bookings
+        function displayDummyBookings() {
+            const container = document.getElementById('bookings-list');
+            if (!container) return;
+            
+            if (dummyBookings.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-gray);">No bookings yet. Start your first booking!</p>';
+                return;
+            }
+            
+            container.innerHTML = dummyBookings.map(booking => `
+                <div class="booking-item">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 60px; height: 60px; background-image: url('${booking.image}'); background-size: cover; background-position: center; border-radius: 10px;"></div>
+                        <div>
+                            <strong style="font-size: 1.1rem;">${booking.carName}</strong><br>
+                            <small style="color: var(--text-gray);">Booking ID: ${booking.id}</small>
+                        </div>
+                    </div>
+                    <div>
+                        <span>📅 ${booking.pickupDate} to ${booking.returnDate}</span><br>
+                        <span>💰 $${booking.totalPrice}</span>
+                    </div>
+                    <span class="booking-status">${booking.status}</span>
+                </div>
+            `).join('');
+        }
+
+        // Render Ride Selection Grid
+        function renderRideGrid() {
+            const grid = document.getElementById('ride-grid');
+            if (!grid) return;
+            
+            grid.innerHTML = cars.map(car => `
+                <div class="ride-card" onclick="selectRide(${car.id})" data-id="${car.id}">
+                    <div class="ride-image" style="background-image: url('${car.image}')"></div>
+                    <div class="ride-name">${car.name}</div>
+                    <div class="ride-price">$${car.price}/day</div>
+                    <div style="font-size: 0.75rem; color: var(--text-gray); margin-top: 0.5rem;">
+                        <i class="fas fa-users"></i> ${car.seats} seats | <i class="fas fa-microchip"></i> ${car.transmission}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Select Ride
+        function selectRide(carId) {
+            selectedRide = cars.find(c => c.id === carId);
+            
+            document.querySelectorAll('.ride-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            const selectedCard = document.querySelector(`.ride-card[data-id="${carId}"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+            }
+            
+            const continueBtn = document.getElementById('continue-to-checkout');
+            if (continueBtn) {
+                continueBtn.disabled = false;
+            }
+        }
+
+        // Step Navigation
+        function goToStep1() {
+            currentStep = 1;
+            document.getElementById('step1-content').style.display = 'block';
+            document.getElementById('step2-content').classList.remove('active');
+            document.getElementById('step3-content').classList.remove('active');
+            
+            document.getElementById('step1').classList.add('active');
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step3').classList.remove('active');
+        }
+
+        function goToStep2() {
+            const pickupDate = document.getElementById('pickup-date').value;
+            const returnDate = document.getElementById('return-date').value;
+            
+            if (!pickupDate || !returnDate) {
+                showMessage('Please select pickup and return dates');
+                return;
+            }
+            
+            currentStep = 2;
+            document.getElementById('step1-content').style.display = 'none';
+            document.getElementById('step2-content').classList.add('active');
+            document.getElementById('step3-content').classList.remove('active');
+            
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step2').classList.add('active');
+            document.getElementById('step3').classList.remove('active');
+        }
+
+        function goToStep3() {
+            if (!selectedRide) {
+                showMessage('Please select a ride first');
+                return;
+            }
+            
+            currentStep = 3;
+            const pickupDate = document.getElementById('pickup-date').value;
+            const returnDate = document.getElementById('return-date').value;
+            const days = Math.ceil((new Date(returnDate) - new Date(pickupDate)) / (1000 * 60 * 60 * 24));
+            const totalPrice = selectedRide.price * days;
+            
+            const checkoutSummary = document.getElementById('checkout-summary');
+            checkoutSummary.innerHTML = `
+                <h4>Booking Summary</h4>
+                <p><strong>Vehicle:</strong> ${selectedRide.name}</p>
+                <p><strong>Pickup:</strong> ${document.getElementById('location').value}</p>
+                <p><strong>Dates:</strong> ${pickupDate} to ${returnDate} (${days} days)</p>
+                <p><strong>Total Price:</strong> <span style="color: var(--primary-blue); font-size: 1.2rem;">$${totalPrice}</span></p>
+                <p style="margin-top: 0.5rem; color: #f39c12;"><i class="fas fa-key"></i> Digital Key Included</p>
+            `;
+            
+            document.getElementById('step1-content').style.display = 'none';
+            document.getElementById('step2-content').classList.remove('active');
+            document.getElementById('step3-content').classList.add('active');
+            
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step3').classList.add('active');
+        }
+
+        function completeBooking() {
+            const name = document.getElementById('checkout-name').value;
+            const email = document.getElementById('checkout-email').value;
+            const phone = document.getElementById('checkout-phone').value;
+            const license = document.getElementById('checkout-license').value;
+            
+            if (!name || !email || !phone || !license) {
+                showMessage('Please fill in all fields');
+                return;
+            }
+            
+            const pickupDate = document.getElementById('pickup-date').value;
+            const returnDate = document.getElementById('return-date').value;
+            const days = Math.ceil((new Date(returnDate) - new Date(pickupDate)) / (1000 * 60 * 60 * 24));
+            const totalPrice = selectedRide.price * days;
+            
+            const newBooking = {
+                id: 'AID' + Math.floor(Math.random() * 10000),
+                carName: selectedRide.name,
+                customerName: name,
+                pickupDate: pickupDate,
+                returnDate: returnDate,
+                totalPrice: totalPrice,
+                status: 'Confirmed',
+                image: selectedRide.image
+            };
+            
+            dummyBookings.unshift(newBooking);
+            displayDummyBookings();
+            
+            showMessage(`Thank you ${name}! Your booking for ${selectedRide.name} is confirmed. Booking ID: ${newBooking.id}`);
+            
+            selectedRide = null;
+            document.getElementById('checkout-name').value = '';
+            document.getElementById('checkout-email').value = '';
+            document.getElementById('checkout-phone').value = '';
+            document.getElementById('checkout-license').value = '';
+            
+            goToStep1();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Page Navigation
+        function showPage(page) {
+            document.getElementById('home-page').style.display = page === 'home' ? 'block' : 'none';
+            document.getElementById('vehicles-page').style.display = page === 'vehicles' ? 'block' : 'none';
+            document.getElementById('bookings-page').style.display = page === 'bookings' ? 'flex' : 'none';
+            document.getElementById('features-page').style.display = page === 'features' ? 'block' : 'none';
+            
+            if (page === 'bookings') {
+                displayDummyBookings();
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Render All Vehicles for Fleet Page
+        function renderVehicles() {
+            const grid = document.getElementById('vehicle-grid');
+            if (!grid) return;
+            
+            grid.innerHTML = cars.map(car => `
+                <div class="vehicle-card" onclick="bookFromAllFleet(${car.id})">
                     <div class="vehicle-image" style="background-image: url('${car.image}')">
                         <div class="vehicle-badge">New ${car.year}</div>
                     </div>
@@ -1019,51 +1549,61 @@
                             <span><i class="fas fa-cogs"></i> ${car.transmission}</span>
                         </div>
                         <div class="vehicle-price">$${car.price} <span>/day</span></div>
-                        <button class="btn-book" onclick="event.stopPropagation(); openBookingModal(${car.id})">Book Now</button>
+                        <button class="btn-book" onclick="event.stopPropagation(); bookFromAllFleet(${car.id})">Book Now</button>
                     </div>
                 </div>
             `).join('');
         }
 
-        function searchCars() {
-            const pickupDate = document.getElementById('pickup-date').value;
-            const returnDate = document.getElementById('return-date').value;
-            
-            if (!pickupDate || !returnDate) {
-                showMessage('Please select both pickup and return dates');
-                return;
+        function bookFromAllFleet(carId) {
+            const car = cars.find(c => c.id === carId);
+            if (car) {
+                selectedRide = car;
+                showPage('home');
+                setTimeout(() => {
+                    document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+                    goToStep2();
+                }, 100);
             }
+        }
+
+        function selectMercedesEQS() {
+            const mercedes = cars.find(c => c.name === "Mercedes-Benz EQS");
+            if (mercedes) {
+                selectedRide = mercedes;
+                document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+                goToStep2();
+            }
+        }
+
+        // Banner Slideshow
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.banner-slide');
+        
+        function startSlideshow() {
+            if (slides.length === 0) return;
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 4000);
+        }
+
+        // Set Default Dates
+        function setDefaultDates() {
+            const today = new Date();
+            const pickupDate = document.getElementById('pickup-date');
+            const returnDate = document.getElementById('return-date');
             
-            showMessage(`Found ${cars.length} cars available for your dates!`);
-            document.getElementById('vehicles').scrollIntoView({ behavior: 'smooth' });
+            if (pickupDate && returnDate) {
+                pickupDate.valueAsDate = today;
+                const returnDateObj = new Date(today);
+                returnDateObj.setDate(today.getDate() + 3);
+                returnDate.valueAsDate = returnDateObj;
+            }
         }
 
-        function openBookingModal(carId) {
-            selectedCar = cars.find(c => c.id === carId);
-            const modal = document.getElementById('modal');
-            const modalDetails = document.getElementById('modal-details');
-            
-            modalDetails.innerHTML = `
-                <div style="margin-bottom: 1rem; padding: 1rem; background: #f3f4f6; border-radius: 10px;">
-                    <h3>${selectedCar.name}</h3>
-                    <p>$${selectedCar.price}/day</p>
-                    <p>Pickup: ${document.getElementById('location').value}</p>
-                    <p>Dates: ${document.getElementById('pickup-date').value} to ${document.getElementById('return-date').value}</p>
-                    <p style="margin-top: 0.5rem; color: #f39c12;"><i class="fas fa-key"></i> Digital Key Included</p>
-                </div>
-            `;
-            
-            modal.classList.add('active');
-        }
-
-        function selectCar(carId) {
-            openBookingModal(carId);
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-        }
-
+        // Show Message
         function showMessage(msg) {
             const msgDiv = document.getElementById('success-message');
             msgDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`;
@@ -1073,59 +1613,62 @@
             }, 3000);
         }
 
-        document.getElementById('booking-form').addEventListener('submit', (e) => {
+        // Sign In Modal
+        function openSignInModal() {
+            document.getElementById('signin-modal').classList.add('active');
+        }
+        
+        function closeSignInModal() {
+            document.getElementById('signin-modal').classList.remove('active');
+        }
+
+        // AI Assistant
+        function showAIMessage() {
+            const messages = [
+                "🤖 Hello! How can I help you today?",
+                "🚗 Looking for a luxury vehicle? Try our Mercedes-Benz EQS!",
+                "💡 Need help? Check out our customer reviews!",
+                "📅 Want to book? Fill in your dates and choose your ride!",
+                "⭐ Our AI system recommends the perfect car for you!"
+            ];
+            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+            showMessage(randomMsg);
+        }
+
+        // Handle Sign In Form
+        document.getElementById('signin-form')?.addEventListener('submit', (e) => {
             e.preventDefault();
-            const name = document.getElementById('customer-name').value;
-            const email = document.getElementById('customer-email').value;
+            const email = document.getElementById('signin-email').value;
             
-            if (name && email) {
-                showMessage(`Thank you ${name}! Your booking for ${selectedCar?.name} is confirmed. Digital key will be sent to your phone.`);
-                closeModal();
-                document.getElementById('booking-form').reset();
+            if (email) {
+                showMessage(`Welcome back! You're now signed in.`);
+                closeSignInModal();
             } else {
-                showMessage('Please fill in all fields');
+                showMessage('Please enter your email');
             }
         });
 
-        function setDefaultDates() {
-            const today = new Date();
-            const pickupDate = document.getElementById('pickup-date');
-            const returnDate = document.getElementById('return-date');
-            
-            pickupDate.valueAsDate = today;
-            const returnDateObj = new Date(today);
-            returnDateObj.setDate(today.getDate() + 3);
-            returnDate.valueAsDate = returnDateObj;
-        }
-
-        function openModal() {
-            if (!selectedCar) {
-                showMessage('Please select a car first');
-                return;
-            }
-            document.getElementById('modal').classList.add('active');
-        }
-
-        // Create floating particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                const size = Math.random() * 5 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                particle.style.animationDuration = `${Math.random() * 3 + 4}s`;
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        renderCars();
+        // Initialize
+        renderFrontFleet();
+        renderRideGrid();
+        renderVehicles();
         setDefaultDates();
-        createParticles();
+        startSlideshow();
+        displayDummyBookings();
+        
+        // Make functions global
+        window.showPage = showPage;
+        window.goToStep1 = goToStep1;
+        window.goToStep2 = goToStep2;
+        window.goToStep3 = goToStep3;
+        window.selectRide = selectRide;
+        window.completeBooking = completeBooking;
+        window.openSignInModal = openSignInModal;
+        window.closeSignInModal = closeSignInModal;
+        window.selectMercedesEQS = selectMercedesEQS;
+        window.showAIMessage = showAIMessage;
+        window.directBookFromFront = directBookFromFront;
+        window.bookFromAllFleet = bookFromAllFleet;
     </script>
 </body>
 </html>
