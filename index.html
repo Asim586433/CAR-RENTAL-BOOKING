@@ -155,24 +155,78 @@
             display: flex;
             align-items: center;
             padding: 6rem 5% 4rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
             position: relative;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
+        /* Animated Car Banner */
+        .car-banner {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 55%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .banner-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            animation: slideShow 12s infinite;
+        }
+
+        .banner-slide {
             position: absolute;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z M20,20 L80,20 L80,80 L20,80 Z"/></svg>');
-            opacity: 0.1;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            animation: fadeSlide 12s infinite;
+        }
+
+        .banner-slide:nth-child(1) {
+            background-image: url('https://images.unsplash.com/photo-1626668893638-6e8e2b6c2d8a?w=800&h=600&fit=crop');
+            animation-delay: 0s;
+        }
+        .banner-slide:nth-child(2) {
+            background-image: url('https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&h=600&fit=crop');
+            animation-delay: 4s;
+        }
+        .banner-slide:nth-child(3) {
+            background-image: url('https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=800&h=600&fit=crop');
+            animation-delay: 8s;
+        }
+
+        @keyframes slideShow {
+            0%, 33.33% { transform: translateX(0); }
+            33.34%, 66.66% { transform: translateX(-100%); }
+            66.67%, 100% { transform: translateX(-200%); }
+        }
+
+        @keyframes fadeSlide {
+            0%, 25% { opacity: 1; }
+            33.33%, 91.67% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(15,23,42,0.9) 0%, rgba(30,27,75,0.7) 50%, transparent 100%);
+            z-index: 2;
         }
 
         .hero-content {
-            max-width: 600px;
+            max-width: 45%;
             position: relative;
-            z-index: 1;
+            z-index: 3;
         }
 
         .hero-badge {
@@ -207,182 +261,59 @@
             margin-bottom: 2rem;
         }
 
-        /* Car Key Animation Container */
-        .key-animation-container {
+        /* Mercedes EQS Featured Card */
+        .mercedes-featured {
             position: absolute;
-            right: 5%;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 400px;
-            height: 400px;
-            z-index: 2;
-        }
-
-        .sports-car-key {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            animation: floatKey 3s ease-in-out infinite;
-        }
-
-        .key-body {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 280px;
-            height: 80px;
-            background: linear-gradient(135deg, #2c3e50, #1a2632);
-            border-radius: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.2);
-        }
-
-        .key-head {
-            position: absolute;
-            left: -40px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #e67e22, #f39c12);
-            border-radius: 50%;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .key-head i {
-            font-size: 2.5rem;
-            color: white;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        }
-
-        .key-buttons {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            gap: 15px;
-        }
-
-        .key-btn {
-            width: 35px;
-            height: 35px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            animation: pulseBtn 2s infinite;
-        }
-
-        .key-btn i {
-            font-size: 1.2rem;
-            color: #f39c12;
-        }
-
-        .key-btn:nth-child(2) {
-            animation-delay: 0.5s;
-        }
-
-        .key-btn:nth-child(3) {
-            animation-delay: 1s;
-        }
-
-        @keyframes floatKey {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-20px) rotate(5deg);
-            }
-        }
-
-        @keyframes pulseBtn {
-            0%, 100% {
-                transform: scale(1);
-                background: rgba(255,255,255,0.1);
-            }
-            50% {
-                transform: scale(1.1);
-                background: rgba(243,156,18,0.3);
-            }
-        }
-
-        /* Key Glow Effect */
-        .key-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 320px;
-            height: 120px;
-            background: radial-gradient(circle, rgba(243,156,18,0.3) 0%, transparent 70%);
-            border-radius: 60px;
-            animation: glowPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes glowPulse {
-            0%, 100% {
-                opacity: 0.5;
-                transform: translate(-50%, -50%) scale(1);
-            }
-            50% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1.1);
-            }
-        }
-
-        /* Mercedes Key Image */
-        .mercedes-key {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
+            bottom: 30px;
+            left: 30px;
             background: rgba(255,255,255,0.95);
             backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 1rem;
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
             display: flex;
             align-items: center;
             gap: 1rem;
             box-shadow: var(--shadow-lg);
             z-index: 10;
             animation: slideInLeft 0.6s ease;
+            border-left: 4px solid #f39c12;
         }
 
-        .mercedes-key-icon {
+        .mercedes-icon {
             width: 60px;
             height: 60px;
             background: linear-gradient(135deg, #2c3e50, #1a2632);
-            border-radius: 30px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
         }
 
-        .mercedes-key-icon i {
+        .mercedes-icon i {
             font-size: 2rem;
             color: #f39c12;
         }
 
-        .mercedes-key-info {
-            flex: 1;
-        }
-
-        .mercedes-key-info h4 {
-            font-size: 0.9rem;
+        .mercedes-info h4 {
+            font-size: 1rem;
             color: var(--text-dark);
             margin-bottom: 0.25rem;
         }
 
-        .mercedes-key-info p {
-            font-size: 0.7rem;
+        .mercedes-info p {
+            font-size: 0.75rem;
             color: var(--text-gray);
+        }
+
+        .mercedes-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-top: 0.5rem;
         }
 
         @keyframes slideInLeft {
@@ -396,10 +327,48 @@
             }
         }
 
+        /* Floating Particles Animation */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: float 6s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
-            .key-animation-container {
-                display: none;
+            .car-banner {
+                width: 100%;
+                opacity: 0.3;
+            }
+            .hero-content {
+                max-width: 100%;
+                text-align: center;
+            }
+            .mercedes-featured {
+                bottom: 20px;
+                left: 20px;
+                right: 20px;
             }
         }
 
@@ -410,19 +379,24 @@
             .nav-links {
                 display: none;
             }
-            .mercedes-key {
-                bottom: 10px;
-                left: 10px;
+            .mercedes-featured {
                 padding: 0.75rem;
+            }
+            .mercedes-icon {
+                width: 45px;
+                height: 45px;
+            }
+            .mercedes-icon i {
+                font-size: 1.5rem;
             }
         }
 
-        /* Rest of the existing styles remain same */
+        /* Rest of the existing styles */
         .booking-section {
             position: relative;
             margin-top: -80px;
             padding: 0 5%;
-            z-index: 10;
+            z-index: 20;
         }
 
         .booking-card {
@@ -459,13 +433,6 @@
             transition: all 0.3s;
         }
 
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
         .stats-section {
             padding: 5rem 5%;
             background: white;
@@ -478,22 +445,6 @@
             max-width: 1200px;
             margin: 0 auto;
             text-align: center;
-        }
-
-        .stat-card {
-            padding: 1.5rem;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary-blue);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-gray);
-            font-weight: 500;
         }
 
         .vehicles-section {
@@ -600,10 +551,6 @@
             transition: all 0.3s;
         }
 
-        .btn-book:hover {
-            background: var(--primary-dark);
-        }
-
         .features-section {
             padding: 5rem 5%;
             background: white;
@@ -633,11 +580,6 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 1.5rem;
-        }
-
-        .feature-icon i {
-            font-size: 2rem;
-            color: white;
         }
 
         .testimonials-section {
@@ -765,8 +707,21 @@
         </div>
     </nav>
 
-    <!-- Hero Section with Car Key Animation -->
+    <!-- Hero Section with Animated Car Banner -->
     <section class="hero">
+        <!-- Animated Car Banner -->
+        <div class="car-banner">
+            <div class="banner-slider">
+                <div class="banner-slide"></div>
+                <div class="banner-slide"></div>
+                <div class="banner-slide"></div>
+            </div>
+            <div class="banner-overlay"></div>
+        </div>
+        
+        <!-- Floating Particles -->
+        <div class="particles" id="particles"></div>
+        
         <div class="hero-content">
             <div class="hero-badge">
                 <i class="fas fa-robot"></i> AI-Powered Experience
@@ -778,38 +733,15 @@
             </button>
         </div>
         
-        <!-- Sports Car Key Animation -->
-        <div class="key-animation-container">
-            <div class="sports-car-key">
-                <div class="key-glow"></div>
-                <div class="key-body">
-                    <div class="key-head">
-                        <i class="fas fa-key"></i>
-                    </div>
-                    <div class="key-buttons">
-                        <div class="key-btn">
-                            <i class="fas fa-lock-open"></i>
-                        </div>
-                        <div class="key-btn">
-                            <i class="fas fa-lock"></i>
-                        </div>
-                        <div class="key-btn">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Mercedes-Benz EQS Key Image -->
-        <div class="mercedes-key">
-            <div class="mercedes-key-icon">
+        <!-- Mercedes-Benz EQS Featured Card -->
+        <div class="mercedes-featured">
+            <div class="mercedes-icon">
                 <i class="fas fa-car-side"></i>
             </div>
-            <div class="mercedes-key-info">
-                <h4>Mercedes-Benz EQS</h4>
-                <p>Digital Key • Smart Access • AI-Enabled</p>
-                <small style="color: #f39c12;">⚡ Premium Keyless Entry</small>
+            <div class="mercedes-info">
+                <h4>Mercedes-Benz EQS 2024</h4>
+                <p>All-Electric Luxury Sedan | 480km Range</p>
+                <span class="mercedes-badge"><i class="fas fa-key"></i> Digital Key Included</span>
             </div>
         </div>
     </section>
@@ -1007,7 +939,7 @@
     </div>
 
     <script>
-        // Vehicle Data with Mercedes EQS
+        // Vehicle Data
         const cars = [
             {
                 id: 1,
@@ -1174,8 +1106,26 @@
             document.getElementById('modal').classList.add('active');
         }
 
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 5 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particle.style.animationDuration = `${Math.random() * 3 + 4}s`;
+                particlesContainer.appendChild(particle);
+            }
+        }
+
         renderCars();
         setDefaultDates();
+        createParticles();
     </script>
 </body>
 </html>
